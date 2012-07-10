@@ -1,0 +1,28 @@
+<html>
+	<head>
+		<link href="resources/style.css" rel="stylesheet" type="text/css">
+		<script src="resources/jquery1-7-2.min.js" type="text/javascript"></script>
+		<script src="resources/ttw-simple-notifications-min.js" type="text/javascript"></script>
+		<script src="resources/main.js" type="text/javascript"></script>
+	</head>
+<!--	BODY	-->
+	<body>
+		<div class="shortBody">
+			<div class="logo-container">
+				<div class="logo"> <h1 class="logo-write">TDev Shortener</h1></div>
+			</div>
+			<div class="url-container">
+				<div class="container-url-light">
+					<h4>Paste your long URL below</h4>  
+			        <input type="text" name="url" id="url" placeholder="URL Here!" onkeypress="return OnEnter(event)"/>
+			        <div class="separator-dark"></div>
+			        <div class="separator-light"></div>
+			        <div class="submit">
+			        	<input type="button" value="Short it" onClick="sendForm('form')"/>
+			        </div>
+			    </div>
+			</div>
+			<div class="footer">TotenDev 2010-2012. ALL RIGHTS RESERVED.</div>
+		</div>
+	</body>
+</html>
