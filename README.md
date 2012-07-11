@@ -1,26 +1,33 @@
-TDev Shortener
+TDevShortener [![Build Status](https://secure.travis-ci.org/TotenDev/TDevShortener.png?branch=master)](http://travis-ci.org/TotenDev/TDevShortener)
 =========================
 
-TDev Shortener has been developed by TotenDev team, as an internal system, with the main principle of been a private and simple shortener.
-
-
-Getting Started
-=========
-TDev Shortener is currently in development, and maintained by TotenDev Team. But stills stable for external use :).
+TDevShortener has been developed by TotenDev team, as an internal system with the main principle of been a private and simple shortener for anyone who wants it.
 
 Requirements
 =========
+- npm
+- nodejs **(and some dependencies)**
+- mysql server connection
+- TDevMetrics **OPTIONAL**
 
-To get it running you need `nodejs` installed, OR you can run in `Heroku` OR any `foreman` OS Based that supports `nodejs`.
-`NPM` is also needed to control dependencies, after installing it, you will need to run `npm install`, so all dependencies are loaded locally. In case of Heroku it should be done automatically.
+Installing
+=========
+All Stable code will be on `master` branch, any other branch is designated to unstable codes. So if you are installing for production environment, use `master` branch for better experience.
 
+To run TDevShortener you MUST have mysql server connection and [database configured](raw/master/application/db.sql). All credentials and preferences can be configured at package.json and are described [here](#configuration).
+
+After configured your environment you can run commands below to start TDevShortener:
+
+	1.npm install
+	2.npm test
+	3.'node main.js' OR 'foreman start'
 
 Configuration
 ========
 All Configuration can be done through `package.json` file in root three.
 
 ---
-## Database ##
+#### Database Config ####
 Database is used for storing all shortened URL and Codes.
 - `database.host` - MySQL Host. **REQUIRED**
 - `database.port` - MySQL Host Port. **REQUIRED**
@@ -30,7 +37,7 @@ Database is used for storing all shortened URL and Codes.
 - `database.table` - MySQL DB Table Name. **REQUIRED**
 
 ---
-## REST ##
+#### REST Config ####
 REST is used for all `HTTP` talks. 
 - `rest.host` - REST Listening Host. **REQUIRED**
 - `rest.port` - REST Listening Port. **REQUIRED**
@@ -38,6 +45,52 @@ REST is used for all `HTTP` talks.
 - `rest.cache-expires` - REST Cache expires, in milliseconds. **REQUIRED IF rest.cache-state is ON**
 
 ---
-## METRICS ##
-METRICS is used for storing metrics about it. It uses `TDMetrics`.
-- `metrics.projectID` - METRICS Project ID. **REQUIRED**
+#### METRICS Config ####
+This module is complete **optional** and can be disabled by removing `metrics` root key from `package.json` file.
+This module is used to storing metrics about it use. It consumes `TDMetrics` API.
+- `metrics.host` - Metrics server host . **REQUIRED IF ENABLED**
+- `metrics.port` - Metrics server port . **REQUIRED IF ENABLED**
+- `metrics.path` - Metrics server path. (Use if you know what you doing) **OPTIONAL**
+- `metrics.projectID` - `TDMetrics` ProjectID parameter. **REQUIRED IF ENABLED**
+- `metrics.auth` - `TDMetrics` authentication. **REQUIRED IF ENABLED**
+
+Rest API
+========
+
+---
+####Short URL (POST)####
+- Method: `POST`
+- URL: `example.com/create/`
+- Body: `http://mylongurl.sobig.com/tolong`
+- Success codes: 
+	- `200` - `http://sh.tt/12345678`
+- Error Codes: 
+	- `202`
+	- `409`
+	- `500`
+	
+---
+####Short URL (GET)####
+- Method: `GET`
+- URL: `example.com/create/http://mylongurl.sobig.com/tolong`
+- Success codes: 
+	- `200` - `http://sh.tt/12345678`
+- Error Codes: 
+	- `202`
+	- `409`
+	- `500`
+
+---
+####Solve URL####
+- Method: `GET`
+- URL: `example.com/12345678/`
+- Success codes: 
+	- `302`
+- Error Codes: 
+	- `202`
+	- `409`
+	- `500`
+	
+License
+========
+[GNU GENERAL PUBLIC LICENSE V3](raw/master/LICENSE)
