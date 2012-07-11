@@ -55,7 +55,7 @@ TDShortener.prototype.unShortener = function (hash,callbackFunction) {
 }
 //url with hashcode
 TDShortener.prototype.formatToURL = function formatToURL(hash) {
-	if (TDConfig("rest.port") == 80) { return "http://" + TDConfig("rest.host") + "/" + hash ; }
+	if (TDConfig("rest.port") == 80 && TDConfig("rest.port") != (process.env.PORT || TDConfig("rest.port"))) { return "http://" + TDConfig("rest.host") + "/" + hash ; }
 	else { return "http://" + TDConfig("rest.host") + ":" + TDConfig("rest.port") + "/" + hash ; }
 }
 
