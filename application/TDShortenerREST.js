@@ -83,6 +83,15 @@ function TDShortenerREST () {
 		server.close();
 		process.exit(2);
 	});
+	//Check if is testing
+	process.argv.forEach(function (val, index, array) {
+	  	if (val == "--test") {
+			setTimeout(function () {
+				console.log("Server is on after 5. Closing it.");
+				process.exit(0);
+			},5000);
+		}
+	});
 }
 
 
