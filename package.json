@@ -24,7 +24,7 @@
   	},
 	"rest": {
 		"host": "xxx.com",
-   	 	"port": "80",
+   	 	"port": "8080",
 		"cache-state": "1",
 		"cache-expires":"3600000"
 	},

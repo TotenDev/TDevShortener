@@ -76,6 +76,13 @@ function TDShortenerREST () {
 	server.listen((process.env.PORT || TDConfig("rest.port")),function () {
 		console.log('Server is running on port:' + (process.env.PORT || TDConfig("rest.port")) + ' on host:' + TDConfig("rest.host"));
 	});
+	//on error
+	server.addListener('error', function (e) {
+	    console.log("HTTP Server is not running with error:" + e);
+		console.log("Killing process");
+		server.close();
+		process.exit(2);
+	});
 }
 
 
