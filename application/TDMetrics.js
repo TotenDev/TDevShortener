@@ -1,3 +1,10 @@
+//
+// TDMetrics.js — TDevShortener
+// today is 7/10/12, it is now 5:26 PM
+// created by TotenDev
+// see LICENSE for details.
+//
+
 //Modules
 var http = require('http');
 var assert = require('assert');
@@ -20,7 +27,7 @@ function TDMetrics (metricString,statusCode,typeString,placeString,callback) {
 }
 
 /**
- *	run
+ *	send
  **/
 TDMetrics.sendMetric = function(metricString,statusCode,typeString,placeString,callback){
 	var date = new Date();
@@ -67,7 +74,7 @@ TDMetrics.sendMetric = function(metricString,statusCode,typeString,placeString,c
 				callback(null,true);
 			}	
 		});
-	} );
+	});
 	req.on('error', function(err){
 		if (!response) {
 			response = true;

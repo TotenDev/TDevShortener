@@ -20,19 +20,12 @@ assert.ok(TDConfig("database.database"),"TDShortener says: 'database.database' i
 assert.ok(TDConfig("database.table"),"TDShortener says: 'database.table' is a required value and is not specified on config file.");
 assert.ok(TDConfig("rest.cache-state"),"TDShortener says: 'rest.cache-state' is a required value and is not specified on config file.");
 (TDConfig("rest.cache-state")&&TDConfig("rest.cache-state")=="1" ? assert.ok(TDConfig("rest.cache-expires"),"TDShortener says: 'rest.cache-expires' is a required value when 'rest.cache-state' is 1 BUT it is not specified on config file.") : null);
-//Enum log types 
-exports.DEBUG = 2;
-exports.NOTICE = 1;
-exports.ERROR = 0;
 
 //Shared instance
 module.exports = new TDShortener();
 //TDShortener Initializer
-function TDShortener () {
-//	this.type = 
-}
+function TDShortener () {}
 //Main Methods
-//short it
 TDShortener.prototype.shortener = function (_url,callbackFunction) {
 	var url = _url ;
 	//isValid url
@@ -60,9 +53,6 @@ TDShortener.prototype.shortener = function (_url,callbackFunction) {
 TDShortener.prototype.unShortener = function (hash,callbackFunction) {
 	TDShortener.URLOfHash(hash,callbackFunction);
 }
-
-
-//Public Helpers
 //url with hashcode
 TDShortener.prototype.formatToURL = function formatToURL(hash) {
 	if (TDConfig("rest.port") == 80) { return "http://" + TDConfig("rest.host") + "/" + hash ; }
@@ -91,8 +81,6 @@ TDShortener.randomHash = function randomHash () {
 	}
 	return randomstring;
 }
-
-
 
 
 

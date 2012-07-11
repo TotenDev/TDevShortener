@@ -18,10 +18,8 @@ exports.ERROR = 0;
 //Shared instance
 exports.sharedLogger = new TDLogger((TDConfig("logging.log-type") ? TDConfig("logging.log-type") : 0));
 //TDLogger Initializer
-function TDLogger (_type) {
-	this.type = _type ;
-}
-//
+function TDLogger (_type) { this.type = _type ; }
+//LogIt
 TDLogger.prototype.logIt = function (_type,_logStr) {
 	//check if is allowed
 	if (_type <= this.type) { 
