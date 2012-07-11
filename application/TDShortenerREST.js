@@ -21,7 +21,7 @@ function TDShortenerREST () {
 	//Create Server
 	var server = http.createServer(function (req, res) {
 		if (req.method == "POST") {
-			//Exectaly "/create/" 
+			//Exectaly "/create/"
 			if (req.url.match("/create/$")) {
 				//Set as string, unlees data comes as buffer
 				req.setEncoding("utf8");
@@ -30,10 +30,11 @@ function TDShortenerREST () {
 				//Listen to Body
 				req.addListener("data",function (chunck) { permChunck = permChunck + chunck; });
 				//Listen to end
-				req.addListener("end",function () { 
-					if (permChunck && permChunck.length > 0) {
+				req.addListener("end", function () {
+					var body = TDShortenerREST.parseBody(permChunck);
+					if (body.link && body.link.length > 0) {
 						//Shortit
-						TDShortener.shortener(permChunck,function (okay,hashcode) {
+						TDShortener.shortener(body.link,function (okay,hashcode) {
 							if (okay) { TDShortenerREST.resSuccess(res,hashcode); }
 							else { TDShortenerREST.dieConflict(res,hashcode); }
 						});
@@ -41,7 +42,7 @@ function TDShortenerREST () {
 				});
 			}else TDShortenerREST.dieRequest(res);
 		}
-		else if (req.method == "GET"){ 
+		else if (req.method == "GET"){
 			//Short
 			if (req.url.match("^/create/")) {
 				//Get URL
@@ -78,14 +79,14 @@ function TDShortenerREST () {
 	});
 	//on error
 	server.addListener('error', function (e) {
-	    console.log("HTTP Server is not running with error:" + e);
+		console.log("HTTP Server is not running with error:" + e);
 		console.log("Killing process");
 		server.close();
 		process.exit(2);
 	});
 	//Check if is testing
 	process.argv.forEach(function (val, index, array) {
-	  	if (val == "--test") {
+		if (val == "--test") {
 			setTimeout(function () {
 				console.log("Server is on after 5. Closing it.");
 				process.exit(0);
@@ -100,7 +101,7 @@ function TDShortenerREST () {
 TDShortenerREST.dieInFile = function dieInFile(res,filePath) {
 	res.writeHead(201);
 	fs.readFile("./application" + filePath,function (err,data) {
-		if (!err && data) { res.end(data); }	
+		if (!err && data) { res.end(data); }
 		else res.end();
 	});
 	//Check for metrics availability
@@ -108,11 +109,12 @@ TDShortenerREST.dieInFile = function dieInFile(res,filePath) {
 		//metricString,statusCode,typeString,placeString,callback
 		var Metrics = require('./TDMetrics.js')("Status 201","201","Info",filePath,function (resp,ok) { });
 	}
-}
+};
+
 TDShortenerREST.dieRequest = function dieRequest(res) {
 	res.writeHead(202);
 	fs.readFile("./application/index.html",function (err,data) {
-		if (!err && data) { res.end(data); }	
+		if (!err && data) { res.end(data); }
 		else res.end();
 	});
 	//Check for metrics availability
@@ -120,7 +122,8 @@ TDShortenerREST.dieRequest = function dieRequest(res) {
 		//metricString,statusCode,typeString,placeString,callback
 		var Metrics = require('./TDMetrics.js')("Status 202","202","Info","/index.html",function (resp,ok) { });
 	}
-}
+};
+
 TDShortenerREST.dieConflict = function dieConflict(res,hashcode) {
 	//conflict status code
 	res.writeHead(409, {'Content-Type': 'text/plain'});
@@ -130,7 +133,8 @@ TDShortenerREST.dieConflict = function dieConflict(res,hashcode) {
 		//metricString,statusCode,typeString,placeString,callback
 		var Metrics = require('./TDMetrics.js')("Status 409","409","Error " + hashcode,"/create/",function (resp,ok) { });
 	}
-}
+};
+
 TDShortenerREST.resSuccess= function resSuccess(res,hashcode) {
 	res.writeHead(200, {'Content-Type': 'text/plain'});
 	res.end(TDShortener.formatToURL(hashcode));
@@ -139,7 +143,8 @@ TDShortenerREST.resSuccess= function resSuccess(res,hashcode) {
 		//metricString,statusCode,typeString,placeString,callback
 		var Metrics = require('./TDMetrics.js')("Status 200","200","Info","/create/",function (resp,ok) { });
 	}
-}
+};
+
 TDShortenerREST.redirect = function redirect(res,toURL) {
 	//Check if have protocol
 	if (!toURL.match("http://") && !toURL.match("https://")) { toURL = "http://" + toURL; }
@@ -151,4 +156,16 @@ TDShortenerREST.redirect = function redirect(res,toURL) {
 		//metricString,statusCode,typeString,placeString,callback
 		var Metrics = require('./TDMetrics.js')("Status 302","302","Info","/XXXXXXXX",function (resp,ok) { });
 	}
-}
+};
+
+TDShortenerREST.parseBody = function parseBody(string) {
+	var body = {};
+	var params = string.split('&');
+
+	for (var param in params) {
+		var key = params[param].split('=');
+		body[key[0]] = key[1];
+	}
+
+	return body;
+};

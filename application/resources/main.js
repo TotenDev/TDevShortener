@@ -24,7 +24,7 @@ function sendForm(response_id){
       }
       ajax.open("POST","create/",true);
       ajax.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-      ajax.send(url);
+      ajax.send("link=" + url);
 }
 
 function OnEnter(evt) {
