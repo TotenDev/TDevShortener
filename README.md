@@ -14,7 +14,7 @@ Installing
 =========
 All Stable code will be on `master` branch, any other branch is designated to unstable codes. So if you are installing for production environment, use `master` branch for better experience.
 
-To run TDevShortener you MUST have mysql server connection and [database configured](raw/master/application/db.sql). All credentials and preferences can be configured at package.json and are described [here](#configuration).
+To run TDevShortener you MUST have mysql server connection and [database configured](/raw/master/application/db.sql). All credentials and preferences can be configured at package.json and are described [here](#configuration).
 
 After configured your environment you can run commands below to start TDevShortener:
 
