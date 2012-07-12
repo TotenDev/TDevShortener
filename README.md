@@ -7,28 +7,33 @@ TDevShortener has been developed by TotenDev team, as an internal system with th
 
 ##Requirements
 
-- npm
-- nodejs **(and some dependencies)**
+- [npm](https://github.com/isaacs/npm)
+- [nodejs](https://github.com/joyent/node) **(and some dependencies)**
 - mysql server connection
-- TDevMetrics **OPTIONAL**
+- [TDevMetrics](https://github.com/TotenDev/TDMetrics/) **OPTIONAL**
 
 ##Installing
 
 All Stable code will be on `master` branch, any other branch is designated to unstable codes. So if you are installing for production environment, use `master` branch for better experience.
 
-To run TDevShortener you MUST have mysql server connection and [database configured](TDevShortener/raw/master/application/db.sql). All credentials and preferences can be configured at package.json and are described [here](#configuration).
+To run TDevShortener you MUST have mysql server connection and [database configured](TDevShortener/raw/master/application/db.sql). All credentials and preferences can be configured at `package.json` and are described [here](#configuration).
+
+---
 
 After configured your environment you can run commands below to start TDevShortener:
 
-	1. npm install
-	2. npm test
-	3. 'node main.js' OR 'foreman start'
+Download and install dependencies
+
+	$ npm install
+
+Start server
+	
+	$ 'node main.js' OR 'foreman start'
 
 ##Configuration
 
 All Configuration can be done through `package.json` file in root directory.
 
----
 #### Database Config
 Database is used for storing all shortened URL and Codes.
 - `database.host` - MySQL Host. **REQUIRED**
@@ -58,7 +63,6 @@ This module is used to storing metrics about it use. It consumes `TDMetrics` API
 
 ##Rest API
 
----
 ####Short URL (POST)
 - Method: `POST`
 - URL: `example.com/create/`
@@ -80,6 +84,7 @@ This module is used to storing metrics about it use. It consumes `TDMetrics` API
 	- `202`
 	- `409`
 	- `500`
+	
 ---
 ####Solve URL
 - Method: `GET`
