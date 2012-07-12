@@ -27,12 +27,5 @@
    	 	"port": "8080",
 		"cache-state": "1",
 		"cache-expires":"3600000"
-	},
-	"metrics": {
-		"projectID": "3",
-		"auth" : "Basic XXXXXX",
-		"host" : "XX.herokuapp.com",
-		"port" : "80",
-		"path" : "/info/create"
-  	}
+	}
 }

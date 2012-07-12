@@ -58,13 +58,9 @@ REST is used for all `HTTP` talks.
 
 ---
 #### METRICS Config
-This module is complete **optional** and can be disabled by removing `metrics` root key from `package.json` file.
-This module is used to storing metrics about it use. It consumes `TDMetrics` API.
-- `metrics.host` - Metrics server host . **REQUIRED IF ENABLED**
-- `metrics.port` - Metrics server port . **REQUIRED IF ENABLED**
-- `metrics.path` - Metrics server path. (Use if you know what you doing) **OPTIONAL**
-- `metrics.projectID` - `TDMetrics` ProjectID parameter. **REQUIRED IF ENABLED**
-- `metrics.auth` - `TDMetrics` authentication. **REQUIRED IF ENABLED**
+All Metrics configuration should be done in `application/TDMetrics/package.json` file, if you do not have this file, please initialize **GIT** submodules.
+
+Please read [here](https://github.com/TotenDev/TDMetrics-LibNode#configuration) for more details.
 
 ##Rest API
 
