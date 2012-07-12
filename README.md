@@ -16,11 +16,16 @@ TDevShortener has been developed by TotenDev team, as an internal system with th
 
 All Stable code will be on `master` branch, any other branch is designated to unstable codes. So if you are installing for production environment, use `master` branch for better experience.
 
-To run TDevShortener you MUST have mysql server connection and [database configured](TDevShortener/raw/master/application/db.sql). All credentials and preferences can be configured at `package.json` and are described [here](#configuration).
+To run TDevShortener you MUST have mysql server connection and [database configured](https://github.com/TotenDev/TDevShortener/raw/master/application/db.sql). All credentials and preferences can be configured at `package.json` and are described [here](#configuration).
 
 ---
 
 After configured your environment you can run commands below to start TDevShortener:
+
+Initialize **GIT** submodules
+
+	$ git submodule init
+	$ git submodule update
 
 Download and install dependencies
 
