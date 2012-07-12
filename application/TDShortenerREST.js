@@ -105,10 +105,10 @@ TDShortenerREST.dieInFile = function dieInFile(res,filePath) {
 		else res.end();
 	});
 	//Check for metrics availability
-	if (TDConfig("metrics")) {
+	try {
 		//metricString,statusCode,typeString,placeString,callback
 		var Metrics = require('./TDMetrics/TDMetrics.js')("Status 201","201","Info",filePath,function (resp,ok) { });
-	}
+	} catch (e) {}
 };
 
 TDShortenerREST.dieRequest = function dieRequest(res) {
@@ -118,10 +118,10 @@ TDShortenerREST.dieRequest = function dieRequest(res) {
 		else res.end();
 	});
 	//Check for metrics availability
-	if (TDConfig("metrics")) {
+	try {
 		//metricString,statusCode,typeString,placeString,callback
 		var Metrics = require('./TDMetrics/TDMetrics.js')("Status 202","202","Info","/index.html",function (resp,ok) { });
-	}
+	} catch (e) {}
 };
 
 TDShortenerREST.dieConflict = function dieConflict(res,hashcode) {
@@ -129,20 +129,20 @@ TDShortenerREST.dieConflict = function dieConflict(res,hashcode) {
 	res.writeHead(409, {'Content-Type': 'text/plain'});
 	res.end(hashcode);
 	//Check for metrics availability
-	if (TDConfig("metrics")) {
+	try {
 		//metricString,statusCode,typeString,placeString,callback
 		var Metrics = require('./TDMetrics/TDMetrics.js')("Status 409","409","Error " + hashcode,"/create/",function (resp,ok) { });
-	}
+	} catch (e) {}
 };
 
 TDShortenerREST.resSuccess= function resSuccess(res,hashcode) {
 	res.writeHead(200, {'Content-Type': 'text/plain'});
 	res.end(TDShortener.formatToURL(hashcode));
 	//Check for metrics availability
-	if (TDConfig("metrics")) {
+	try {
 		//metricString,statusCode,typeString,placeString,callback
 		var Metrics = require('./TDMetrics/TDMetrics.js')("Status 200","200","Info","/create/",function (resp,ok) { });
-	}
+	} catch (e) {}
 };
 
 TDShortenerREST.redirect = function redirect(res,toURL) {
@@ -152,10 +152,10 @@ TDShortenerREST.redirect = function redirect(res,toURL) {
 	res.writeHead(302, {'location': toURL});
 	res.end();
 	//Check for metrics availability
-	if (TDConfig("metrics")) {
+	try {
 		//metricString,statusCode,typeString,placeString,callback
 		var Metrics = require('./TDMetrics/TDMetrics.js')("Status 302","302","Info","/XXXXXXXX",function (resp,ok) { });
-	}
+	} catch (e) {}
 };
 
 TDShortenerREST.parseBody = function parseBody(string) {
