@@ -1,10 +1,13 @@
-TDevShortener [![Build Status](https://secure.travis-ci.org/TotenDev/TDevShortener.png?branch=master)](http://travis-ci.org/TotenDev/TDevShortener)
-=========================
+TDevShortener
+=============
 
 TDevShortener has been developed by TotenDev team, as an internal system with the main principle of been a private and simple shortener for anyone who wants it.
 
+[![Build Status](https://secure.travis-ci.org/TotenDev/TDevShortener.png?branch=master)](http://travis-ci.org/TotenDev/TDevShortener)
+
 Requirements
-=========
+============
+
 - npm
 - nodejs **(and some dependencies)**
 - mysql server connection
@@ -18,13 +21,14 @@ To run TDevShortener you MUST have mysql server connection and [database configu
 
 After configured your environment you can run commands below to start TDevShortener:
 
-	1.npm install
-	2.npm test
-	3.'node main.js' OR 'foreman start'
+	1. npm install
+	2. npm test
+	3. 'node main.js' OR 'foreman start'
 
 Configuration
-========
-All Configuration can be done through `package.json` file in root three.
+=============
+
+All Configuration can be done through `package.json` file in root directory.
 
 ---
 #### Database Config ####
@@ -93,4 +97,4 @@ Rest API
 	
 License
 ========
-[GNU GENERAL PUBLIC LICENSE V3](TDevShortener/raw/master/LICENSE)
+[GPLv3](TDevShortener/raw/master/LICENSE)
