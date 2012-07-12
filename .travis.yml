@@ -6,3 +6,5 @@ notifications:
   irc:
     channels:
       - "irc.freenode.org#TotenDev"
+before_install:
+  git submodule init && git submodule --quiet update

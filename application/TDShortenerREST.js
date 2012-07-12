@@ -107,7 +107,7 @@ TDShortenerREST.dieInFile = function dieInFile(res,filePath) {
 	//Check for metrics availability
 	if (TDConfig("metrics")) {
 		//metricString,statusCode,typeString,placeString,callback
-		var Metrics = require('./TDMetrics.js')("Status 201","201","Info",filePath,function (resp,ok) { });
+		var Metrics = require('./TDMetrics/TDMetrics.js')("Status 201","201","Info",filePath,function (resp,ok) { });
 	}
 };
 
@@ -120,7 +120,7 @@ TDShortenerREST.dieRequest = function dieRequest(res) {
 	//Check for metrics availability
 	if (TDConfig("metrics")) {
 		//metricString,statusCode,typeString,placeString,callback
-		var Metrics = require('./TDMetrics.js')("Status 202","202","Info","/index.html",function (resp,ok) { });
+		var Metrics = require('./TDMetrics/TDMetrics.js')("Status 202","202","Info","/index.html",function (resp,ok) { });
 	}
 };
 
@@ -131,7 +131,7 @@ TDShortenerREST.dieConflict = function dieConflict(res,hashcode) {
 	//Check for metrics availability
 	if (TDConfig("metrics")) {
 		//metricString,statusCode,typeString,placeString,callback
-		var Metrics = require('./TDMetrics.js')("Status 409","409","Error " + hashcode,"/create/",function (resp,ok) { });
+		var Metrics = require('./TDMetrics/TDMetrics.js')("Status 409","409","Error " + hashcode,"/create/",function (resp,ok) { });
 	}
 };
 
@@ -141,7 +141,7 @@ TDShortenerREST.resSuccess= function resSuccess(res,hashcode) {
 	//Check for metrics availability
 	if (TDConfig("metrics")) {
 		//metricString,statusCode,typeString,placeString,callback
-		var Metrics = require('./TDMetrics.js')("Status 200","200","Info","/create/",function (resp,ok) { });
+		var Metrics = require('./TDMetrics/TDMetrics.js')("Status 200","200","Info","/create/",function (resp,ok) { });
 	}
 };
 
@@ -154,7 +154,7 @@ TDShortenerREST.redirect = function redirect(res,toURL) {
 	//Check for metrics availability
 	if (TDConfig("metrics")) {
 		//metricString,statusCode,typeString,placeString,callback
-		var Metrics = require('./TDMetrics.js')("Status 302","302","Info","/XXXXXXXX",function (resp,ok) { });
+		var Metrics = require('./TDMetrics/TDMetrics.js')("Status 302","302","Info","/XXXXXXXX",function (resp,ok) { });
 	}
 };
 
