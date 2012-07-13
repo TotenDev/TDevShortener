@@ -18,7 +18,5 @@ xcuserdata
 CVS
 
 node_modules/
-application/TDMetrics/
-
 
 *.log

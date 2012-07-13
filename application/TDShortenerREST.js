@@ -14,6 +14,7 @@ var fs = require('fs');
 //Asserts
 assert.ok(TDConfig("rest.host"),"TDShortenerREST says: 'rest.host' is a required value and is not specified on config file.");
 assert.ok(TDConfig("rest.port"),"TDShortenerREST says: 'rest.port' is a required value and is not specified on config file.");
+var maxRequestBufferSize = (TDConfig("rest.max-request-buffer") ? TDConfig("rest.max-request-buffer") : "256");
 //Shared instance
 module.exports = new TDShortenerREST();
 //TDShortener Initializer
@@ -27,19 +28,29 @@ function TDShortenerREST () {
 				req.setEncoding("utf8");
 				//Permanent chunck
 				var permChunck = "";
+				var maxSizeReached = false;
 				//Listen to Body
-				req.addListener("data",function (chunck) { permChunck = permChunck + chunck; });
+				req.addListener("data",function (chunck) { 
+					permChunck = permChunck + chunck;
+					if (TDShortenerREST.largerThanLimit(permChunck)) {
+						maxSizeReached = true;
+						TDShortenerREST.dieTooLarge(res);
+					}
+				});
 				//Listen to end
 				req.addListener("end", function () {
-					var body = TDShortenerREST.parseBody(permChunck);
-					if (body.link && body.link.length > 0) {
-						//Shortit
-						TDShortener.shortener(body.link,function (okay,hashcode) {
-							if (okay) { TDShortenerREST.resSuccess(res,hashcode); }
-							else { TDShortenerREST.dieConflict(res,hashcode); }
-						});
-					}else TDShortenerREST.dieRequest(res);
-				});
+					//Check is max size is not reached :)
+					if (!maxSizeReached) {
+						var body = TDShortenerREST.parseBody(permChunck);
+						if (body.link && body.link.length > 0) {
+							//Shortit
+							TDShortener.shortener(body.link,function (okay,hashcode) {
+								if (okay) { TDShortenerREST.resSuccess(res,hashcode); }
+								else { TDShortenerREST.dieConflict(res,hashcode); }
+							});
+						}else TDShortenerREST.dieConflict(res);
+					}//NO ELSE, IT SHOULD BE RETURN BEFORE 
+				});	
 			}else TDShortenerREST.dieRequest(res);
 		}
 		else if (req.method == "GET"){
@@ -110,7 +121,6 @@ TDShortenerREST.dieInFile = function dieInFile(res,filePath) {
 		var Metrics = require('./TDMetrics/TDMetrics.js')("Status 201","201","Info",filePath,function (resp,ok) { });
 	} catch (e) {}
 };
-
 TDShortenerREST.dieRequest = function dieRequest(res) {
 	res.writeHead(202);
 	fs.readFile("./application/index.html",function (err,data) {
@@ -123,7 +133,11 @@ TDShortenerREST.dieRequest = function dieRequest(res) {
 		var Metrics = require('./TDMetrics/TDMetrics.js')("Status 202","202","Info","/index.html",function (resp,ok) { });
 	} catch (e) {}
 };
-
+TDShortenerREST.dieTooLarge = function dieTooLarge(res) {
+	//conflict status code
+	res.writeHead(413, {'Content-Type': 'text/plain'});
+	res.end();
+};
 TDShortenerREST.dieConflict = function dieConflict(res,hashcode) {
 	//conflict status code
 	res.writeHead(409, {'Content-Type': 'text/plain'});
@@ -134,7 +148,6 @@ TDShortenerREST.dieConflict = function dieConflict(res,hashcode) {
 		var Metrics = require('./TDMetrics/TDMetrics.js')("Status 409","409","Error " + hashcode,"/create/",function (resp,ok) { });
 	} catch (e) {}
 };
-
 TDShortenerREST.resSuccess= function resSuccess(res,hashcode) {
 	res.writeHead(200, {'Content-Type': 'text/plain'});
 	res.end(TDShortener.formatToURL(hashcode));
@@ -144,7 +157,6 @@ TDShortenerREST.resSuccess= function resSuccess(res,hashcode) {
 		var Metrics = require('./TDMetrics/TDMetrics.js')("Status 200","200","Info","/create/",function (resp,ok) { });
 	} catch (e) {}
 };
-
 TDShortenerREST.redirect = function redirect(res,toURL) {
 	//Check if have protocol
 	if (!toURL.match("http://") && !toURL.match("https://")) { toURL = "http://" + toURL; }
@@ -158,6 +170,15 @@ TDShortenerREST.redirect = function redirect(res,toURL) {
 	} catch (e) {}
 };
 
+
+
+
+//Utils
+TDShortenerREST.largerThanLimit = function largerThanLimit(string) {
+	var byteCount = unescape(encodeURIComponent(string)).length;
+	console.log(byteCount);
+	return (byteCount > maxRequestBufferSize);
+}
 TDShortenerREST.parseBody = function parseBody(string) {
 	var body = {};
 	var params = string.split('&');

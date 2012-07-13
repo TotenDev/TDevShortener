@@ -51,10 +51,11 @@ Database is used for storing all shortened URL and Codes.
 ---
 #### REST Config
 REST is used for all `HTTP` talks. 
-- `rest.host` - REST Listening Host. **REQUIRED**
-- `rest.port` - REST Listening Port. **REQUIRED**
-- `rest.cache-state` - REST Cache State (1-ON 0-OFF), it'll cache last 1000 URLs and Codes. **REQUIRED**
-- `rest.cache-expires` - REST Cache expires, in milliseconds. **REQUIRED IF rest.cache-state is ON**
+- `rest.host` - Listening host. **REQUIRED**
+- `rest.port` - Listening port. **REQUIRED**
+- `rest.cache-state` - cache state (1-ON 0-OFF), it'll cache last 1000 URLs and Codes. **REQUIRED**
+- `rest.cache-expires` - cache expire time in milliseconds. **REQUIRED IF rest.cache-state is ON**
+- `rest.max-request-buffer` - max request BODY buffer size. **OPTIONAL** (if not specified will use default value `256 bytes`)
 
 ---
 #### METRICS Config
@@ -67,7 +68,7 @@ Please read [here](https://github.com/TotenDev/TDMetrics-LibNode#configuration) 
 ####Short URL (POST)
 - Method: `POST`
 - URL: `example.com/create/`
-- Body: `http://mylongurl.sobig.com/tolong`
+- Body: `link=http://mylongurl.sobig.com/tolong`
 - Success codes: 
 	- `200` - `http://sh.tt/12345678`
 - Error Codes: 
