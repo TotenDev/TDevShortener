@@ -20,6 +20,12 @@ TDRestWrapper.prototype.matchHashCode = function matchHashCode(req) {
 		if (toMatch.length == 8 && toMatch.match("([A-Z-a-z-0-9]){8}")) { return true; }
 	}return false;
 }
+TDRestWrapper.prototype.hashCode = function hashCode(req) {
+	if (req.url.length > 8 && req.url.length < 11) {
+		var toMatch = req.url.replace("/","");
+		if (toMatch.length == 8 && toMatch.match("([A-Z-a-z-0-9]){8}")) { return toMatch; }
+	}return null;
+}
 TDRestWrapper.prototype.matchRule = function matchRule(req,rule) {
 	return req.url.match(rule);
 }

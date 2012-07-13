@@ -70,7 +70,7 @@ TDShortenerREST.getRoute = function getRoute(req,res) {
 	//Unshort
 	else if (TDRestWrapper.matchHashCode(req)) {
 		//unshort
-		TDShortener.unShortener(toMatch,function (found,url) {
+		TDShortener.unShortener(TDRestWrapper.hashCode(req),function (found,url) {
 			if (found) { TDRestWrapper.redirect(res,url); }
 			else { TDRestWrapper.dieConflict(res,url); }
 		});
