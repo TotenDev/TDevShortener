@@ -59,7 +59,7 @@ REST is used for all `HTTP` talks.
 
 ---
 #### METRICS Config
-All Metrics configuration should be done in `application/TDMetrics/package.json` file, if you do not have this file, please initialize **GIT** submodules.
+All Metrics configuration should be done in `package.json` file, in root directory.
 
 Please read [here](https://github.com/TotenDev/TDMetrics-LibNode#configuration) for more details.
 
