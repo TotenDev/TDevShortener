@@ -23,7 +23,7 @@
 		"table":"urls"
   	},
 	"rest": {
-		"host": "xx.com",
+		"host": "127.0.0.1",
    	 	"port": "8080",
 		"cache-state": "1",
 		"cache-expires":"3600000",
