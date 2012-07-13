@@ -44,7 +44,7 @@ Database is used for storing all shortened URL and Codes.
 - `database.host` - MySQL Host. **REQUIRED**
 - `database.port` - MySQL Host Port. **REQUIRED**
 - `database.user` - MySQL DB User. **REQUIRED**
-- `database.password` - MySQL DB Password. **REQUIRED**
+- `database.password` - MySQL DB Password. **OPTIONAL**
 - `database.database` - MySQL DB Name. **REQUIRED**
 - `database.table` - MySQL DB Table Name. **REQUIRED**
 

@@ -15,7 +15,7 @@ var MemoryCache = new Store();
 assert.ok(TDConfig("database.host"),"TDShortener says: 'database.host' is a required value and is not specified on config file.");
 assert.ok(TDConfig("database.port"),"TDShortener says: 'database.port' is a required value and is not specified on config file.");
 assert.ok(TDConfig("database.user"),"TDShortener says: 'database.user' is a required value and is not specified on config file.");
-assert.ok(TDConfig("database.password"),"TDShortener says: 'database.password' is a required value and is not specified on config file.");
+
 assert.ok(TDConfig("database.database"),"TDShortener says: 'database.database' is a required value and is not specified on config file.");
 assert.ok(TDConfig("database.table"),"TDShortener says: 'database.table' is a required value and is not specified on config file.");
 assert.ok(TDConfig("rest.cache-state"),"TDShortener says: 'rest.cache-state' is a required value and is not specified on config file.");
@@ -81,7 +81,16 @@ TDShortener.randomHash = function randomHash () {
 	}
 	return randomstring;
 }
-
+TDShortener.databaseConnection = function databaseConnection () {
+	//Create socket
+	var db = require("mysql-native").createTCPClient(TDConfig("database.host"),TDConfig("database.port")); // localhost:3306 by default
+	db.auto_prepate = true;
+	//auth
+	if (TDConfig("database.password")) { db.auth(TDConfig("database.database"),TDConfig("database.user"),TDConfig("database.password")); }
+	else { db.auth(TDConfig("database.database"),TDConfig("database.user")); }
+	
+	return db;
+}
 
 
 //DB
@@ -95,11 +104,8 @@ TDShortener.shortIt = function shortIt(url,callback) {
 }
 //Try to insert hash into db
 TDShortener.tryToInsert = function tryToInsert(url,hashcode,callbackFunction){
-	//Create socket
-	var db = require("mysql-native").createTCPClient(TDConfig("database.host"),TDConfig("database.port")); // localhost:3306 by default
-	db.auto_prepate = true;
-	//auth
-	db.auth(TDConfig("database.database"),TDConfig("database.user"),TDConfig("database.password"));
+	//Create connection
+	var db = TDShortener.databaseConnection();
 	//create query
 	var queryStr = "INSERT INTO " + TDConfig("database.database") + "." + TDConfig("database.table") + " (url,hash) VALUES ('" + new Buffer(url).toString('base64') + "','" + hashcode + "');" ;
 	//execute
@@ -123,11 +129,8 @@ TDShortener.tryToInsert = function tryToInsert(url,hashcode,callbackFunction){
 }
 //Check in db if contains url
 TDShortener.containsURL = function containsURL(url,callbackFunction){
-	//Create socket
-	var db = require("mysql-native").createTCPClient(TDConfig("database.host"),TDConfig("database.port")); // localhost:3306 by default
-	db.auto_prepate = true;
-	//auth
-	db.auth(TDConfig("database.database"),TDConfig("database.user"),TDConfig("database.password"));
+	//Create connection
+	var db = TDShortener.databaseConnection();
 	//create query
 	var queryStr = "SELECT * FROM " + TDConfig("database.database") + "." + TDConfig("database.table") + " WHERE url='" + new Buffer(url).toString('base64') + "';" ;
 	//execute
@@ -164,10 +167,7 @@ TDShortener.hashOfURL = function hashOfURL(url,callbackFunction){
 	if (TDConfig("rest.cache-state") == "1" && cacheHash && cacheHash.length > 0) { callbackFunction(true,cacheHash); }
 	else {
 		//Create socket
-		var db = require("mysql-native").createTCPClient(TDConfig("database.host"),TDConfig("database.port")); // localhost:3306 by default
-		db.auto_prepate = true;
-		//auth
-		db.auth(TDConfig("database.database"),TDConfig("database.user"),TDConfig("database.password"));
+		var db = TDShortener.databaseConnection();
 		//create query
 		var queryStr = "SELECT * FROM " + TDConfig("database.database") + "." + TDConfig("database.table") + " WHERE url='" + baseURL + "';" ;
 		//execute
@@ -207,10 +207,7 @@ TDShortener.URLOfHash = function URLOfHash(hash,callbackFunction){
 	if (TDConfig("rest.cache-state") == "1" && cacheURL && cacheURL.length > 0) { callbackFunction(true,cacheURL); }
 	else {
 		//Create socket
-		var db = require("mysql-native").createTCPClient(TDConfig("database.host"),TDConfig("database.port")); // localhost:3306 by default
-		db.auto_prepate = true;
-		//auth
-		db.auth(TDConfig("database.database"),TDConfig("database.user"),TDConfig("database.password"));
+		var db = TDShortener.databaseConnection();
 		//create query
 		var queryStr = "SELECT * FROM " + TDConfig("database.database") + "." + TDConfig("database.table") + " WHERE hash='" + hash + "';" ;
 		//execute
