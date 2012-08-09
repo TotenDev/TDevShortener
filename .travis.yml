@@ -5,6 +5,7 @@ node_js:
   - 0.8
 script: "node main.js --test"
 notifications:
+  email: dev@totendev.com
   irc:
     channels:
       - "irc.freenode.org#TotenDev"
