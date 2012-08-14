@@ -1,3 +1,0 @@
-[submodule "application/TDMetrics"]
-	path = application/TDMetrics
-	url = https://github.com/TotenDev/TDMetrics-LibNode.git
