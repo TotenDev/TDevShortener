@@ -8,9 +8,9 @@
 //Includes
 var http = require('http');
 var assert = require('assert');
-var TDShortener = require('./TDShortener.js');
-var TDConfig = require('./TDConfig.js');
-var TDRestWrapper = require('./TDRestWrapper.js');
+var TDShortener = require('./src/TDShortener.js');
+var TDConfig = require('./src/TDConfig.js');
+var TDRestWrapper = require('./src/TDRestWrapper.js');
 //Asserts
 assert.ok(TDConfig("rest.host"),"TDShortenerREST says: 'rest.host' is a required value and is not specified on config file.");
 assert.ok(TDConfig("rest.port"),"TDShortenerREST says: 'rest.port' is a required value and is not specified on config file.");

@@ -6,7 +6,7 @@
 //
 
 // Start rest
-var TDShortenerREST = require('./application/TDShortenerREST.js');
+var TDShortenerREST = require('./application/index.js');
 
 //Get Exceptions
 process.on('uncaughtException', function(err) {
