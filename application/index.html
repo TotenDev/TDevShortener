@@ -1,29 +1,33 @@
 <html>
-	<head>
-		<link href="resources/style.css" rel="stylesheet" type="text/css">
+<head>
+		<meta charset="utf-8">
+		<title>TDevShortener</title>
+		<link href='http://fonts.googleapis.com/css?family=Lekton|Josefin+Sans' rel='stylesheet' type='text/css'>
 		<script src="resources/jquery1-7-2.min.js" type="text/javascript"></script>
 		<script src="resources/ttw-simple-notifications-min.js" type="text/javascript"></script>
 		<script src="resources/main.js" type="text/javascript"></script>
-		<title>TDevShortener</title>
-	</head>
+		<link href="resources/style.css" rel="stylesheet" type="text/css">
+</head>
 <!--	BODY	-->
-	<body>
-		<div class="shortBody">
-			<div class="logo-container">
-				<div class="logo"> <h1 class="logo-write">TDevShortener</h1></div>
+<body>
+<!--  Header Area (Logo)  -->
+		<center class="logo-container">
+			<div class="logo"></div>
+		</center>
+<!-- 	Input area	 -->
+		<center class="content-area">
+			<div class="inputArea">
+		        <input class="textField" type="text" name="url" id="url" placeholder="URL Here!" onkeypress="return OnEnter(event)"/>
+			    <input class="button" id="button" type="button" onClick="sendForm('form')"/>
+				<!-- Message Container -->
+				<div class="ttw-simple-notification-wrapper"></div>
 			</div>
-			<div class="url-container">
-				<div class="container-url-light">
-					<h4>Paste your long URL below</h4>  
-			        <input type="text" name="url" id="url" placeholder="URL Here!" onkeypress="return OnEnter(event)"/>
-			        <div class="separator-dark"></div>
-			        <div class="separator-light"></div>
-			        <div class="submit">
-			        	<input type="button" value="Short it" onClick="sendForm('form')"/>
-			        </div>
-			    </div>
+			<!-- 	Footer	 -->
+			<div class="footer">
+				<a href="http://totendev.com">totendev.com</a>
 			</div>
-			<div class="footer">TotenDev 2010-2012. ALL RIGHTS RESERVED.</div>
-		</div>
-	</body>
+		</center>
+<!-- 	Fork me :)	 -->
+		<a href="https://github.com/totendev/TDevShortener" id="github"><span>Fork me on GitHub!</span></a>
+</body>
 </html>

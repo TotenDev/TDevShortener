@@ -51,11 +51,14 @@
             css[position[0]] = 0;
             css[position[1]] = 0;
 
-            //add the wrapper to the document, position it.
-            wrapper = $(markup.wrapper).css(css).appendTo($this);
-
-            //add the tmp wrapper to the document. Notifications are added here first to get height in preparation for animations
-            tmp = $(markup.tmp).appendTo($this);
+			//Try to get positioned element
+			wrapper = document.getElementsByClassName('ttw-simple-notification-wrapper');
+			if (!wrapper) {
+				//add the wrapper to the document, position it.
+				wrapper = $(markup.wrapper).css(css).appendTo($this);
+			}
+			//add the tmp wrapper to the document. Notifications are added here first to get height in preparation for animations
+			tmp = $(markup.tmp).appendTo($this);
 
             //bind the event handler to the close button
             $(cssSelector.notification + ' ' + cssSelector.close).live('click', function(){
@@ -107,7 +110,6 @@
         function setMessage($notification, msg){
                 if(typeof msg != 'undefined'){
                     $notification.find('.message').html(msg);
-//					$notification.find('.disclaimer').html("Click here to copy to clipboard.");
 				}
         }
 

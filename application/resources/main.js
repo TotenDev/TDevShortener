@@ -12,14 +12,23 @@ document.onLoad = function (e) {
  //Use default options:
 function sendForm(response_id){
       var url = document.getElementById('url').value;
-      var element=document.getElementById(response_id);
+      //start animation
+      var u = document.getElementById('button');
+      u.style.backgroundImage="url('resources/spin.png')";
+      u.style.webkitAnimation = "rotation 1s infinite linear";
+      //send request
       var ajax=new XMLHttpRequest();
       ajax.onreadystatechange = function(){
         if(ajax.readyState==4||ajax.readyState==0){
-          if (ajax.status==200){
+			//stop animation
+			var u = document.getElementById('button');
+			u.style.backgroundImage="url('resources/buttonBg.png')";
+			u.style.webkitAnimation = "";
+			if (ajax.status==200){
 				//A simple notification with no options:
-				Notifications().show("Shortned: " +url + "<br>To: " + ajax.responseText);
-          } else { window.alert('error ' + ajax.responseText); }
+				Notifications().show('<a href="' + ajax.responseText + '">' + ajax.responseText + "</a>");
+				document.getElementById('url').value = "";
+			} else { window.alert('error ' + ajax.responseText); }
         }
       }
       ajax.open("POST","create/",true);
