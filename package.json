@@ -1,7 +1,7 @@
 {
 	"name": "TDevShortener",
 	"description": "TDevShortener",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"author": "TotenDev LTDA",
 	"dependencies": {
 		"dconf": "~0.1.3",

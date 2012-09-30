@@ -24,8 +24,7 @@ body {
 	width:385px;
 	margin-top: 25px;
 	height:110px;
-	background-image: url('logo.png') no-repeat;
-	background-position: top center;
+	background: url('logo.png') no-repeat top center;
 	margin-left: auto;
 	margin-right: auto; 
 }
