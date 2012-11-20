@@ -26,12 +26,10 @@ TDRestWrapper.prototype.hashCode = function hashCode(req) {
 		if (toMatch.length == 8 && toMatch.match("([A-Z-a-z-0-9]){8}")) { return toMatch; }
 	}return null;
 }
-TDRestWrapper.prototype.matchRule = function matchRule(req,rule) {
-	return req.url.match(rule);
-}
+TDRestWrapper.prototype.matchRule = function matchRule(req,rule) { return req.url.match(rule); }
 //
 TDRestWrapper.prototype.dieInFile = function dieInFile(res,filePath) {
-	res.writeHead(201);
+	res.writeHead(200);
 	fs.readFile("./application" + filePath,function (err,data) {
 		if (!err && data) { res.end(data); }
 		else res.end();
@@ -42,8 +40,8 @@ TDRestWrapper.prototype.dieInFile = function dieInFile(res,filePath) {
 		var Metrics = require('./TDMetrics/TDMetrics.js')("Status 201","201","Info",filePath,function (resp,ok) { });
 	} catch (e) {}
 };
-TDRestWrapper.prototype.dieRequest = function dieRequest(res) {
-	res.writeHead(202);
+TDRestWrapper.prototype.dieOnIndex = function dieOnIndex(res) {
+	res.writeHead(200);
 	fs.readFile("./application/index.html",function (err,data) {
 		if (!err && data) { res.end(data); }
 		else res.end();
@@ -55,9 +53,21 @@ TDRestWrapper.prototype.dieRequest = function dieRequest(res) {
 	} catch (e) {}
 };
 TDRestWrapper.prototype.dieTooLarge = function dieTooLarge(res) {
-	//conflict status code
-	res.writeHead(413, {'Content-Type': 'text/plain'});
+	res.writeHead(413);
 	res.end();
+};
+TDRestWrapper.prototype.dieBadRequest = function dieBadRequest(res) {
+  res.writeHead(400);
+  res.end();
+};
+TDRestWrapper.prototype.dieNotFound = function dieNotFound(res,path) {
+  res.writeHead(404);
+  res.end();
+  //Check for metrics availability
+  try {
+    //metricString,statusCode,typeString,placeString,callback
+    var Metrics = require('./TDMetrics/TDMetrics.js')("Status 404","404","Info",path,function (resp,ok) { });
+  } catch (e) {}
 };
 TDRestWrapper.prototype.dieConflict = function dieConflict(res,hashcode) {
 	//conflict status code

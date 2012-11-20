@@ -27,7 +27,7 @@ function TDShortenerREST () {
 		//Routing
 		if (req.method == "POST") { TDShortenerREST.postRoute(req,res); }
 		else if (req.method == "GET"){ TDShortenerREST.getRoute(req,res); }
-		else TDRestWrapper.dieRequest(res);
+		else TDRestWrapper.dieNotFound(res,req.path);
 	});
 	
 	
@@ -65,7 +65,7 @@ TDShortenerREST.getRoute = function getRoute(req,res) {
 				if (okay) { TDRestWrapper.resSuccess(res,hashcode); }
 				else { TDRestWrapper.dieConflict(res,hashcode); }
 			});
-		}else TDRestWrapper.dieRequest(res);
+		}else TDRestWrapper.dieBadRequest(res);
 	}
 	//Unshort
 	else if (TDRestWrapper.matchHashCode(req)) {
@@ -77,7 +77,7 @@ TDShortenerREST.getRoute = function getRoute(req,res) {
 	}
 	//Check for resources request
 	else if (TDRestWrapper.matchRule(req,"^/resources/")) {  TDRestWrapper.dieInFile(res,req.url); }
-	else { TDRestWrapper.dieRequest(res); }
+	else { TDRestWrapper.dieOnIndex(res); }
 };
 TDShortenerREST.postRoute = function postRoute(req,res) {
 	var permChunck = "";
@@ -106,7 +106,7 @@ TDShortenerREST.postRoute = function postRoute(req,res) {
 				}else TDRestWrapper.dieConflict(res);
 			}//NO ELSE, IT SHOULD BE RETURN BEFORE 
 		});	
-	}else TDRestWrapper.dieRequest(res);
+	}else TDRestWrapper.dieNotFound(res,req.path);
 };
 
 
