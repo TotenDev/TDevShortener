@@ -33,20 +33,13 @@ TDShortener.prototype.shortener = function (_url,callbackFunction) {
 		callbackFunction(false,"url is not valid ;(");
 	}
 	else {
-		//Check if url is not bigger than database limit (255)
-		if (url.length > 255) {
-			callbackFunction(false,"url is bigger than limit");
-		}
-		//Continue
-		else {
-			//Check if have same url already stored
-			TDShortener.containsURL(url,function (contains) {
-				//Find it and return
-				if (contains) { TDShortener.hashOfURL(url,function (have,hash) { callbackFunction(true,hash); }); }
-				//Generate hash and insert into DB
-				else { TDShortener.shortIt(url,function (hash) { callbackFunction(true,hash); }); }
-			});
-		}
+      //Check if have same url already stored
+      TDShortener.containsURL(url,function (contains) {
+        //Find it and return
+        if (contains) { TDShortener.hashOfURL(url,function (have,hash) { callbackFunction(true,hash); }); }
+        //Generate hash and insert into DB
+        else { TDShortener.shortIt(url,function (hash) { callbackFunction(true,hash); }); }
+      });
 	}
 }
 //un short it
