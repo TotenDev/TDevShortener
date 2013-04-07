@@ -10,7 +10,6 @@ TDevShortener has been developed by TotenDev team, as an internal system with th
 - [npm](https://github.com/isaacs/npm)
 - [nodejs](https://github.com/joyent/node) **(and some dependencies)**
 - mysql server connection
-- [TDevMetrics](https://github.com/TotenDev/TDMetrics/) **OPTIONAL**
 
 ##Installing
 
@@ -57,11 +56,6 @@ REST is used for all `HTTP` talks.
 - `rest.cache-expires` - cache expire time in milliseconds. **REQUIRED IF rest.cache-state is ON**
 - `rest.max-request-buffer` - max request BODY buffer size. **OPTIONAL** (if not specified will use default value `256 bytes`)
 
----
-#### METRICS Config
-All Metrics configuration should be done in `package.json` file, in root directory.
-
-Please read [here](https://github.com/TotenDev/TDMetrics-LibNode#configuration) for more details.
 
 ##Rest API
 

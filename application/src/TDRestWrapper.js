@@ -34,11 +34,6 @@ TDRestWrapper.prototype.dieInFile = function dieInFile(res,filePath) {
 		if (!err && data) { res.end(data); }
 		else res.end();
 	});
-	//Check for metrics availability
-	try {
-		//metricString,statusCode,typeString,placeString,callback
-		var Metrics = require('./TDMetrics/TDMetrics.js')("Status 201","201","Info",filePath,function (resp,ok) { });
-	} catch (e) {}
 };
 TDRestWrapper.prototype.dieOnIndex = function dieOnIndex(res) {
 	res.writeHead(200);
@@ -46,47 +41,27 @@ TDRestWrapper.prototype.dieOnIndex = function dieOnIndex(res) {
 		if (!err && data) { res.end(data); }
 		else res.end();
 	});
-	//Check for metrics availability
-	try {
-		//metricString,statusCode,typeString,placeString,callback
-		var Metrics = require('./TDMetrics/TDMetrics.js')("Status 202","202","Info","/index.html",function (resp,ok) { });
-	} catch (e) {}
 };
 TDRestWrapper.prototype.dieTooLarge = function dieTooLarge(res) {
 	res.writeHead(413);
 	res.end();
 };
 TDRestWrapper.prototype.dieBadRequest = function dieBadRequest(res) {
-  res.writeHead(400);
-  res.end();
+	res.writeHead(400);
+	res.end();
 };
 TDRestWrapper.prototype.dieNotFound = function dieNotFound(res,path) {
-  res.writeHead(404);
-  res.end();
-  //Check for metrics availability
-  try {
-    //metricString,statusCode,typeString,placeString,callback
-    var Metrics = require('./TDMetrics/TDMetrics.js')("Status 404","404","Info",path,function (resp,ok) { });
-  } catch (e) {}
+	res.writeHead(404);
+	res.end();
 };
 TDRestWrapper.prototype.dieConflict = function dieConflict(res,hashcode) {
 	//conflict status code
 	res.writeHead(409, {'Content-Type': 'text/plain'});
 	res.end(hashcode);
-	//Check for metrics availability
-	try {
-		//metricString,statusCode,typeString,placeString,callback
-		var Metrics = require('./TDMetrics/TDMetrics.js')("Status 409","409","Error " + hashcode,"/create/",function (resp,ok) { });
-	} catch (e) {}
 };
 TDRestWrapper.prototype.resSuccess = function resSuccess(res,hashcode) {
 	res.writeHead(200, {'Content-Type': 'text/plain'});
 	res.end(TDShortener.formatToURL(hashcode));
-	//Check for metrics availability
-	try {
-		//metricString,statusCode,typeString,placeString,callback
-		var Metrics = require('./TDMetrics/TDMetrics.js')("Status 200","200","Info","/create/",function (resp,ok) { });
-	} catch (e) {}
 };
 TDRestWrapper.prototype.redirect = function redirect(res,toURL) {
 	//Check if have protocol
@@ -94,9 +69,4 @@ TDRestWrapper.prototype.redirect = function redirect(res,toURL) {
 	//Do it
 	res.writeHead(302, {'location': toURL});
 	res.end();
-	//Check for metrics availability
-	try {
-		//metricString,statusCode,typeString,placeString,callback
-		var Metrics = require('./TDMetrics/TDMetrics.js')("Status 302","302","Info","/XXXXXXXX",function (resp,ok) { });
-	} catch (e) {}
 };
