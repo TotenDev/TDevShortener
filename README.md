@@ -4,6 +4,7 @@ TDevShortener
 TDevShortener has been developed by TotenDev team, as an internal system with the main principle of been a private and simple shortener for anyone who wants it.
 
 [![Build Status](https://secure.travis-ci.org/TotenDev/TDevShortener.png?branch=master)](http://travis-ci.org/TotenDev/TDevShortener)
+[![Code Climate](https://codeclimate.com/github/TotenDev/TDevShortener.png)](https://codeclimate.com/github/TotenDev/TDevShortener)
 
 ##Requirements
 
