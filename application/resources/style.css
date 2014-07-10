@@ -75,10 +75,11 @@ body {
     width: 26px;
     height: 26px;
     border: none;
+    position: absolute;
     cursor: pointer;
-    margin-left: -38px;
-    padding-top: 8px;
-	background: url('buttonBg.png') no-repeat;
+    margin-left: -31px;
+    margin-top: 42px;
+    background: url('buttonBg.png') no-repeat;
 }
 @-webkit-keyframes rotation {
     from {-webkit-transform: rotate(0deg);}
