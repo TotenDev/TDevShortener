@@ -1,7 +1,7 @@
 TDevShortener
 =============
 
-TDevShortener has been developed by TotenDev team, as an internal system with the main principle of been a private and simple shortener for anyone who wants it.
+TDevShortener has been developed by TotenDev Studio, as an internal system with the main goal of been a private and simple shortener for anyone who needs it..
 
 [![Build Status](https://secure.travis-ci.org/TotenDev/TDevShortener.png?branch=master)](http://travis-ci.org/TotenDev/TDevShortener) [![Dependency Status](https://gemnasium.com/TotenDev/TDevShortener.svg)](https://gemnasium.com/TotenDev/TDevShortener)
 
@@ -9,23 +9,24 @@ TDevShortener has been developed by TotenDev team, as an internal system with th
 ##Requirements
 
 - [npm](https://github.com/isaacs/npm)
-- [nodejs](https://github.com/joyent/node) **(and some dependencies)**
-- mysql server connection
+- [nodejs](https://github.com/joyent/node)
+- mysql database
+
+####Modules
+- [mysql-native] (https://www.npmjs.com/package/mysql-native) for mysql connection
+- [js_cache] (https://www.npmjs.com/package/js_cache) for in-memory cache
+- [newrelic] (https://www.npmjs.com/package/newrelic) for new relic analysis
+
 
 ##Installing
 
 All Stable code will be on `master` branch, any other branch is designated to unstable codes. So if you are installing for production environment, use `master` branch for better experience.
 
-To run TDevShortener you MUST have mysql server connection and [database configured](https://github.com/TotenDev/TDevShortener/raw/master/application/db.sql). All credentials and preferences can be configured at `package.json` and are described [here](#configuration).
+To run TDevShortener you MUST have mysql server connection and [database configured](https://github.com/TotenDev/TDevShortener/raw/master/appConf/db.sql). All credentials and preferences can be configured with ENV IVARS and are described [here](#configuration).
 
----
+--
 
 After configured your environment you can run commands below to start TDevShortener:
-
-Initialize **GIT** submodules
-
-	$ git submodule init
-	$ git submodule update
 
 Download and install dependencies
 
@@ -34,10 +35,14 @@ Download and install dependencies
 Start server
 	
 	$ 'node main.js' OR 'foreman start'
+	
+Also you can use command bellow for **quick testing** without any credentials
+
+	$ 'node main.js --test'
 
 ##Configuration
 
-All Configuration can be done through `package.json` file in root directory.
+All Configuration NEED to be done with ENV IVARS.
 
 #### Database Config
 Database is used for storing all shortened URL and Codes.
@@ -55,8 +60,15 @@ REST is used for all `HTTP` talks.
 - `rest.port` - Listening port. **REQUIRED**
 - `rest.cache-state` - cache state (1-ON 0-OFF), it'll cache last 1000 URLs and Codes. **REQUIRED**
 - `rest.cache-expires` - cache expire time in milliseconds. **REQUIRED IF rest.cache-state is ON**
+- `rest.cache-rows-limit` - cache max recoreds. **REQUIRED IF rest.cache-state is ON**
 - `rest.max-request-buffer` - max request BODY buffer size. **OPTIONAL** (if not specified will use default value `256 bytes`)
 
+---
+#### Overall Config
+- `logging.log-type` - Logging type.. You can use 1,2 or 3 for more verbosity. **REQUIRED**
+- `shortener.acceptedURLS` - Array of regex, that will validate any URL to be shortened. **REQUIRED**
+- `NEW_RELIC_APP_NAME` - New Relic application name. **REQUIRED**
+- `NEW_RELIC_LICENSE_KEY` - New Relic license key. **REQUIRED**
 
 ##Rest API
 
@@ -72,8 +84,8 @@ REST is used for all `HTTP` talks.
 	- `500`
 	
 ---
-####Short URL (GET)
-- Method: `GET`
+####Short URL (GET OR HEAD)
+- Method: `GET` OR `HEAD`
 - URL: `example.com/create/http://mylongurl.sobig.com/tolong`
 - Success codes: 
 	- `200` - `http://sh.tt/12345678`
@@ -83,8 +95,8 @@ REST is used for all `HTTP` talks.
 	- `500`
 	
 ---
-####Solve URL
-- Method: `GET`
+####Solve URL (GET OR HEAD)
+- Method: `GET` OR `HEAD`
 - URL: `example.com/12345678/`
 - Success codes: 
 	- `302`

@@ -1,32 +1,15 @@
 {
-	"name": "TDevShortener",
-	"description": "TDevShortener",
-	"version": "0.0.3",
-	"author": "TotenDev LTDA",
-	"dependencies": {
-		"dconf": "~0.1.3",
-		"mysql-native": "~0.4.5",
-		"js_cache":"~0.1.1"
-	},
-	"engines": {
-	  "node":"0.6.x"
-  	},
-	"logging": {
-		"log-type": "2"
-	},
-	"database": {
-		"host": "127.0.0.1",
-		"port": "8889",
-		"user": "theTest",
-		"password": "PASSWORD",
-		"database": "shortener",
-		"table":"urls"
-  	},
-	"rest": {
-		"host": "127.0.0.1",
-   	 	"port": "8080",
-		"cache-state": "1",
-		"cache-expires":"3600000",
-		"max-request-buffer":"512"
+  "name": "TDevShortener",
+  "description": "TDevShortener",
+  "version": "0.2.0",
+  "author": "TotenDev Studio",
+  "dependencies": {
+    "mysql-native": "~0.4.5",
+    "js_cache":"0.1.x",
+    "newrelic":"1.x.x"
+  },
+  "engines": {
+		"node":"0.12.x",
+		"npm":"2.x.x"
 	}
 }

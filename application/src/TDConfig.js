@@ -5,23 +5,17 @@
 // see LICENSE for details.
 //
 
-var dconf = require('dconf');
 var util = require ('util');
 /*
 Config UltilityClass
 */
 var sharedConfig = new TDConfig();
-module.exports = function (key) { return sharedConfig.getValue(key); }
-
-function TDConfig() {
-	//load config file
-	defaultConfig = dconf.loadSync('package.json');
-	defaultConfig.on('error', function(err) {
-	    throw(err);
-	});	
-//	 console.log(util.inspect(defaultConfig));
-}
-
-TDConfig.prototype.getValue = function (value) {
-	return defaultConfig.get(value);
-}
+module.exports = function () { return sharedConfig; }
+//
+function TDConfig() {}
+TDConfig.prototype.getValue = function getValue(value) { return process.env[value]; }
+TDConfig.prototype.processOnTest = function processOnTest() {
+  for (var i = 0; i < process.argv.length; i++) {
+    if (process.argv[i] == "--test") { return true; }
+  } return false;
+};

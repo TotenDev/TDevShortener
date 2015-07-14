@@ -29,10 +29,12 @@ TDRestWrapper.prototype.hashCode = function hashCode(req) {
 TDRestWrapper.prototype.matchRule = function matchRule(req,rule) { return req.url.match(rule); }
 //
 TDRestWrapper.prototype.dieInFile = function dieInFile(res,filePath) {
-	res.writeHead(200);
+	var thisInstance = this;
 	fs.readFile("./application" + filePath,function (err,data) {
-		if (!err && data) { res.end(data); }
-		else res.end();
+		if (!err && data) {
+			res.writeHead(200); 
+			res.end(data); 
+		} else thisInstance.dieNotFound(res,filePath);
 	});
 };
 TDRestWrapper.prototype.dieOnIndex = function dieOnIndex(res) {
@@ -42,31 +44,27 @@ TDRestWrapper.prototype.dieOnIndex = function dieOnIndex(res) {
 		else res.end();
 	});
 };
+TDRestWrapper.prototype.dieInString = function dieInString(res, string) {
+	res.writeHead(200, {'Content-Type': 'text/plain'});
+	res.end(string)
+};
 TDRestWrapper.prototype.dieTooLarge = function dieTooLarge(res) {
 	res.writeHead(413);
 	res.end();
 };
-TDRestWrapper.prototype.dieBadRequest = function dieBadRequest(res) {
+TDRestWrapper.prototype.dieBadRequest = function dieBadRequest(res,err) {
 	res.writeHead(400);
-	res.end();
+	res.end(err);
 };
 TDRestWrapper.prototype.dieNotFound = function dieNotFound(res,path) {
 	res.writeHead(404);
 	res.end();
-};
-TDRestWrapper.prototype.dieConflict = function dieConflict(res,hashcode) {
-	//conflict status code
-	res.writeHead(409, {'Content-Type': 'text/plain'});
-	res.end(hashcode);
 };
 TDRestWrapper.prototype.resSuccess = function resSuccess(res,hashcode) {
 	res.writeHead(200, {'Content-Type': 'text/plain'});
 	res.end(TDShortener.formatToURL(hashcode));
 };
 TDRestWrapper.prototype.redirect = function redirect(res,toURL) {
-	//Check if have protocol
-	if (!toURL.match("http://") && !toURL.match("https://")) { toURL = "http://" + toURL; }
-	//Do it
 	res.writeHead(302, {'location': toURL});
 	res.end();
 };

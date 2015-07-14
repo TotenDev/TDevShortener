@@ -7,16 +7,16 @@
 
 //Modules
 var assert = require('assert');
-var TDConfig = require('./TDConfig.js');
+var TDConfig = require('./TDConfig.js')();
 //Asserts
-assert.ok(TDConfig("logging.log-type"),"TDLogger says: 'logging.log-type' is a required value and is not specified on config file.");
+assert.ok(TDConfig.getValue("logging.log-type"),"** TDLogger ** 'logging.log-type' is a required value and is not specified.");
 //Enum log types
 exports.DEBUG = 2;
 exports.NOTICE = 1;
 exports.ERROR = 0;
 
 //Shared instance
-exports.sharedLogger = new TDLogger((TDConfig("logging.log-type") ? TDConfig("logging.log-type") : 0));
+exports.sharedLogger = new TDLogger((TDConfig.getValue("logging.log-type") ? TDConfig.getValue("logging.log-type") : 0));
 //TDLogger Initializer
 function TDLogger (_type) { this.type = _type ; }
 //LogIt
