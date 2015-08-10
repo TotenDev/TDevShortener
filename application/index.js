@@ -15,6 +15,8 @@ var TDRestWrapper = require('./src/TDRestWrapper.js');
 assert.ok(TDConfig.getValue("rest.host"),"** TDShortenerREST ** 'rest.host' is a required value and is not specified.");
 assert.ok(TDConfig.getValue("rest.port"),"** TDShortenerREST ** 'rest.port' is a required value and is not specified.");
 var maxRequestBufferSize = (TDConfig.getValue("rest.max-request-buffer") ? TDConfig.getValue("rest.max-request-buffer") : "256");
+var restFallbackURL = (TDConfig.getValue("rest.fallbackURL") ? TDConfig.getValue("rest.fallbackURL") : "none");
+
 //Shared instance
 module.exports = new TDShortenerREST();
 //TDShortener Initializer
@@ -71,7 +73,8 @@ TDShortenerREST.getRoute = function getRoute(req,res) {
 	else if (TDRestWrapper.matchHashCode(req)) {
 		TDShortener.unShortener(TDRestWrapper.hashCode(req),function (found,url) {
 			if (found) { TDRestWrapper.redirect(res,url); }
-			else { TDRestWrapper.dieBadRequest(res,"Can't find URL: " + url); }
+			else if (restFallbackURL != "none") { TDRestWrapper.redirect(res,restFallbackURL); }
+           else { TDRestWrapper.dieBadRequest(res,"Can't find URL: " + url); }
 		});
 	} 
 	//Health check

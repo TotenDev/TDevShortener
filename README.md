@@ -62,6 +62,7 @@ REST is used for all `HTTP` talks.
 - `rest.cache-expires` - cache expire time in milliseconds. **REQUIRED IF rest.cache-state is ON**
 - `rest.cache-rows-limit` - cache max recoreds. **REQUIRED IF rest.cache-state is ON**
 - `rest.max-request-buffer` - max request BODY buffer size. **OPTIONAL** (if not specified will use default value `256 bytes`)
+- `rest.fallbackURL` - URL to be used on fallback of 404. **OPTIONAL** (if not specified will use show empty page with error)
 
 ---
 #### Overall Config
